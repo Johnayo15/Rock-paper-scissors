@@ -38,3 +38,31 @@ function getHumanChoice() {
 // Declare variables to store scores
 let humanScore = 0;
 let computerScore = 0;
+
+// Function to play one round
+function playRound(humanChoice, computerChoice) {
+  console.log("You chose:", humanChoice);
+  console.log("Computer chose:", computerChoice);
+
+  if (humanChoice === computerChoice) {
+    console.log("It's a tie.");
+  } else if (
+    (humanChoice === "rock" && computerChoice === "scissors") ||
+    (humanChoice === "paper" && computerChoice === "rock") ||
+    (humanChoice === "scissors" && computerChoice === "paper")
+  ) {
+    humanScore++;
+    console.log("You win this round.");
+  } else {
+    computerScore++;
+    console.log("Computer wins this round.");
+  }
+
+  console.log(
+    "Current score: Human =",
+    humanScore,
+    "Computer =",
+    computerScore,
+  );
+  console.log("----------------------------");
+}
