@@ -97,3 +97,5 @@ function playGame() {
     console.log("The game is a tie!");
   }
 }
+
+playGame();
