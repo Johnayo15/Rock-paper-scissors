@@ -34,3 +34,7 @@ function getHumanChoice() {
     console.log("Invalid choice. Please try again.");
   }
 }
+
+// Declare variables to store scores
+let humanScore = 0;
+let computerScore = 0;
