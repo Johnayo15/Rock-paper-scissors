@@ -1,10 +1,9 @@
 let humanScore = 0;
 let computerScore = 0;
 let roundsPlayed = 0;
-let totalRounds = 5;
 
 let container = document.createElement("div");
-container.textContent = "Play 5 rounds of rock-paper-scissors";
+container.textContent = "First to 5 wins in rock-paper-scissors";
 document.body.appendChild(container);
 
 let finalResultDiv = document.createElement("div");
@@ -34,6 +33,9 @@ function getComputerChoice() {
 }
 
 function playRound(computerChoice, humanChoice) {
+  if (computerScore === 5 || humanScore === 5) {
+    return;
+  }
   humanChoiceDiv.textContent = `You chose: ${humanChoice} `;
   computerChoiceDiv.textContent = `Computer chose: ${computerChoice}`;
 
@@ -56,7 +58,7 @@ function playRound(computerChoice, humanChoice) {
 
   roundsPlayed++;
   updateRoundMessage(roundMessage);
-  if (roundsPlayed === totalRounds) {
+  if (humanScore >= 5 || computerScore >= 5) {
     endGame();
   }
 }
