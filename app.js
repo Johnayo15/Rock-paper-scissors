@@ -4,22 +4,27 @@ let roundsPlayed = 0;
 let totalRounds = 5;
 
 let container = document.createElement("div");
-container.textContent = "Results: ";
+container.textContent = "Play 5 rounds of rock-paper-scissors";
 document.body.appendChild(container);
 
 let finalResultDiv = document.createElement("div");
-container.appendChild(finalResultDiv);
-
-let ScoreDiv = document.createElement("div");
-container.appendChild(ScoreDiv);
-
 let resultDiv = document.createElement("div");
-container.appendChild(resultDiv);
+let scoreDiv = document.createElement("div");
+let humanChoiceDiv = document.createElement("div");
+let computerChoiceDiv = document.createElement("div");
 
 let playAgainBtn = document.createElement("button");
-playAgainBtn.textContent = "Reset";
+playAgainBtn.textContent = "RESTART";
 playAgainBtn.style.display = "none";
-container.appendChild(playAgainBtn);
+
+container.append(
+  finalResultDiv,
+  resultDiv,
+  humanChoiceDiv,
+  computerChoiceDiv,
+  scoreDiv,
+  playAgainBtn,
+);
 
 let choices = ["rock", "paper", "scissors"];
 
@@ -28,25 +33,26 @@ function getComputerChoice() {
   return choices[random];
 }
 
-function playRound(ComputerChoice, humanChoice) {
-  if (roundsPlayed >= totalRounds) return; // Stop if game is over
+function playRound(computerChoice, humanChoice) {
+  humanChoiceDiv.textContent = `You chose: ${humanChoice} `;
+  computerChoiceDiv.textContent = `Computer chose: ${computerChoice}`;
+
   let roundMessage = "";
-  if (ComputerChoice === humanChoice) {
+  if (computerChoice === humanChoice) {
     roundMessage = `It is a tie! You both chose ${humanChoice}`;
   } else if (
-    (humanChoice === "rock" && ComputerChoice === "scissors") ||
-    (humanChoice === "paper" && ComputerChoice === "rock") ||
-    (humanChoice === "scissors" && ComputerChoice === "paper")
+    (humanChoice === "rock" && computerChoice === "scissors") ||
+    (humanChoice === "paper" && computerChoice === "rock") ||
+    (humanChoice === "scissors" && computerChoice === "paper")
   ) {
     humanScore++;
-    roundMessage = `${humanChoice} beats ${ComputerChoice}. You win this round!`;
-
-    //resultDiv.textContent = "You win";
+    roundMessage = `${humanChoice} beats ${computerChoice}. You win this round!`;
   } else {
     computerScore++;
-    roundMessage = `${ComputerChoice} beats ${humanChoice}. Computer wins this round!`;
-    //resultDiv.textContent = "computer wins";
+    roundMessage = `${computerChoice} beats ${humanChoice}. Computer wins this round!`;
   }
+
+  scoreDiv.textContent = `Current score: Human = ${humanScore} Computer = ${computerScore},`;
 
   roundsPlayed++;
   updateRoundMessage(roundMessage);
@@ -57,7 +63,6 @@ function playRound(ComputerChoice, humanChoice) {
 
 function updateRoundMessage(message) {
   resultDiv.textContent = `Round ${roundsPlayed}: ${message}`;
-  ScoreDiv.textContent = `Score: Player ${humanScore} - Computer ${computerScore}`;
 }
 
 function endGame() {
@@ -66,7 +71,7 @@ function endGame() {
   } else if (computerScore > humanScore) {
     finalResultDiv.textContent = "Game over! Computer wins";
   } else {
-    finalResultDiv.textContent = "Game Over! it is a draw";
+    finalResultDiv.textContent = "Game Over! It is a draw";
   }
 
   playAgainBtn.style.display = "inline-block";
@@ -74,10 +79,10 @@ function endGame() {
 
 choices.forEach(function (choice) {
   const button = document.createElement("button");
-  button.textContent = choice;
+  button.textContent = choice.toLocaleUpperCase();
   button.addEventListener("click", function () {
-    let ComputerChoice = getComputerChoice();
-    playRound(ComputerChoice, choice);
+    let computerChoice = getComputerChoice();
+    playRound(computerChoice, choice);
   });
   container.appendChild(button);
 });
@@ -88,7 +93,9 @@ function resetGame() {
   roundsPlayed = 0;
 
   resultDiv.textContent = "";
-  ScoreDiv.textContent = "";
+  scoreDiv.textContent = "";
+  humanChoiceDiv.textContent = "";
+  computerChoiceDiv.textContent = "";
   finalResultDiv.textContent = "";
   playAgainBtn.style.display = "none";
 }
